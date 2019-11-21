@@ -71,26 +71,6 @@ def left(n, color='black'):
     draw_square(square_size, color)
 
 
-# above(1, "yellow")
-# above(2, "red")
-# below(4, "green")
-# right(2, "blue")
-# left(5, "purple")
-# above(3)
-
-# # create the turtle
-# bob = turtle.Turtle()
-# bob.shape("turtle")
-
-# while True:
-#     # ask for distance, move distance
-#     distance = input("How far will bob walk?")
-#     bob.forward(int(distance))
-
-#     # ask for angle, turn angle
-#     angle = input("How many degrees should bob turn?")
-#     bob.left(int(angle))
-
 command_dict = {
     'above': above,
     'below': below,
@@ -100,23 +80,28 @@ command_dict = {
 
 while True:
     # ask for a command
-    commandInput = input("Enter a command: >")
+    commandInput = input("Enter a command: >").replace(" ", "")
 
     # construct the command
     argsStartIndex = commandInput.find('(')
     argsEndIndex = commandInput.find(')')
     command = commandInput[0:argsStartIndex]
-    commandArgs = commandInput[argsStartIndex+1:argsEndIndex].split(',')
-    print(commandArgs)
+    if command in command_dict.keys():
+        commandArgs = commandInput[argsStartIndex+1:argsEndIndex].split(',')
+        print(commandArgs)
 
-    # if len(commandArgs) > 1:
-    #     n = int(commandArgs[0]
-    #     color_name=commandArgs[1]
-    # else:
-    #     n=int(commandArgs[0]
-    #     color_name=""
+        if len(commandArgs) > 1:
+            n = int(commandArgs[0])
+            color_name = commandArgs[1]
+        else:
+            n = int(commandArgs[0])
+            color_name = "black"
 
-    # execute the command
-    # command_dict[command](n, color_name)
+        # execute the command
+        command_dict[command](n, color_name)
+    else:
+        print("Sorry, I don't understand!")
+        # show_instruction()
+
 
 turtle.done()
