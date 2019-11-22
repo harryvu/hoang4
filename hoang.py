@@ -90,6 +90,8 @@ command_dict = {
 while True:
     # ask user to input command
     commandInput = input("Enter a command: >").replace(" ","")
+    # ask for a command
+    commandInput = input("Enter a command: >").replace(" ", "")
 
     # construct the command
     argsStartIndex = commandInput.find('(')
@@ -102,22 +104,24 @@ while True:
             exit()
         elif "colors" in command:
             colors()
-            continue
     else:
-        print(commandArgsString)
-        commandArgs = commandArgsString.split(',')
-        print(commandArgs)
-  
-        if len(commandArgs) == 2:
-            n = int(commandArgs[0])
-            color_name=commandArgs[1]
-            if color_name not in avail_colors:
-                color_name = "black"
-        else:
-            n=int(commandArgs[0])
-            color_name="black" # black is the default color
+        if command in command_dict.keys():
+            print(commandArgsString)
+            commandArgs = commandArgsString.split(',')
+            print(commandArgs)
+    
+            if len(commandArgs) == 2:
+                n = int(commandArgs[0])
+                color_name=commandArgs[1]
+                if color_name not in avail_colors:
+                    color_name = "black"
+            else:
+                n=int(commandArgs[0])
+                color_name="black" # black is the default color
 
-        # execute the command
-        command_dict[command](n, color_name)
+            # execute the command
+            command_dict[command](n, color_name)
+        else:
+            print("Sorry, I don't understand!")
 
 turtle.done()
