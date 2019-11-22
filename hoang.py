@@ -74,6 +74,7 @@ def colors():
     print(avail_colors)
 
 def exit():
+    """exit the program"""
     sys.exit()
 
 avail_colors = ['black','white','cyan','magenta','yellow','red','green','blue','purple','orange','brown','gold','teal']
@@ -88,9 +89,7 @@ command_dict = {
 }
 
 while True:
-    # ask user to input command
-    commandInput = input("Enter a command: >").replace(" ","")
-    # ask for a command
+    # ask user to input a command
     commandInput = input("Enter a command: >").replace(" ", "")
 
     # construct the command
