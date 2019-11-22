@@ -99,29 +99,32 @@ while True:
     command = commandInput[0:argsStartIndex]
     commandArgsString = commandInput[argsStartIndex+1:argsEndIndex]
     
-    if commandArgsString == '':
-        if "exit" in command:
-            exit()
-        elif "colors" in command:
-            colors()
+    if command not in command_dict.keys():
+        print("Wrong command!")
+        continue
     else:
-        if command in command_dict.keys():
-            print(commandArgsString)
+        # validate command arguments
+        if commandArgsString == '':
+            if "exit" in command:
+                exit()
+            elif "colors" in command:
+                colors()
+                continue
+        else:          
             commandArgs = commandArgsString.split(',')
-            print(commandArgs)
     
             if len(commandArgs) == 2:
                 n = int(commandArgs[0])
                 color_name=commandArgs[1]
                 if color_name not in avail_colors:
-                    color_name = "black"
+                    print("Available colors are:")
+                    colors()
+                    continue
             else:
                 n=int(commandArgs[0])
                 color_name="black" # black is the default color
 
             # execute the command
             command_dict[command](n, color_name)
-        else:
-            print("Sorry, I don't understand!")
 
 turtle.done()
