@@ -1,4 +1,5 @@
 import turtle
+import sys
 
 # define some global variables
 window = turtle.Screen()
@@ -13,7 +14,6 @@ blocks_remain = 10
 
 
 def draw_square(size, color='black'):
-    cur_pos = turtle.pos()
     turtle.color(color)
     turtle.pendown()
     turtle.begin_fill()
@@ -70,53 +70,54 @@ def left(n, color='black'):
     turtle.goto(cur_pos[0] - n * square_size, cur_pos[1])
     draw_square(square_size, color)
 
+def colors():
+    print(avail_colors)
 
-# above(1, "yellow")
-# above(2, "red")
-# below(4, "green")
-# right(2, "blue")
-# left(5, "purple")
-# above(3)
+def exit():
+    sys.exit()
 
-# # create the turtle
-# bob = turtle.Turtle()
-# bob.shape("turtle")
-
-# while True:
-#     # ask for distance, move distance
-#     distance = input("How far will bob walk?")
-#     bob.forward(int(distance))
-
-#     # ask for angle, turn angle
-#     angle = input("How many degrees should bob turn?")
-#     bob.left(int(angle))
+avail_colors = ['black','white','cyan','magenta','yellow','red','green','blue','purple','orange','brown','gold','teal']
 
 command_dict = {
     'above': above,
     'below': below,
     'right': right,
-    'left': left
+    'left': left,
+    'colors': colors,
+    'exit': exit
 }
 
 while True:
-    # ask for a command
-    commandInput = input("Enter a command: >")
+    # ask user to input command
+    commandInput = input("Enter a command: >").replace(" ","")
 
     # construct the command
     argsStartIndex = commandInput.find('(')
     argsEndIndex = commandInput.find(')')
     command = commandInput[0:argsStartIndex]
-    commandArgs = commandInput[argsStartIndex+1:argsEndIndex].split(',')
-    print(commandArgs)
+    commandArgsString = commandInput[argsStartIndex+1:argsEndIndex]
+    
+    if commandArgsString == '':
+        if "exit" in command:
+            exit()
+        elif "colors" in command:
+            colors()
+            continue
+    else:
+        print(commandArgsString)
+        commandArgs = commandArgsString.split(',')
+        print(commandArgs)
+  
+        if len(commandArgs) == 2:
+            n = int(commandArgs[0])
+            color_name=commandArgs[1]
+            if color_name not in avail_colors:
+                color_name = "black"
+        else:
+            n=int(commandArgs[0])
+            color_name="black" # black is the default color
 
-    # if len(commandArgs) > 1:
-    #     n = int(commandArgs[0]
-    #     color_name=commandArgs[1]
-    # else:
-    #     n=int(commandArgs[0]
-    #     color_name=""
-
-    # execute the command
-    # command_dict[command](n, color_name)
+        # execute the command
+        command_dict[command](n, color_name)
 
 turtle.done()
